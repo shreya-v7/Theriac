@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Theriac</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./css/main.css">
+
+
+	<script type="text/javascript">
+		$(document).ready(() => {
+
+			$("#form1").submit((event) => {
+				event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '/',
+					data: $('#form1').serialize(),
+					dataType: "json",
+					success: (response) => {
+						$('#form1')[0].reset();
+
+						document.getElementById("check").innerHTML = response.Success;
+						//ADD THIS CODE
+						setTimeout(() => {
+							document.getElementById("check").innerHTML = "";
+						}, 3000);
+						if (response.Success == "You are regestered,You can login now.") {
+							document.getElementById("aa").click();
+						};
+					},
+					error: () => {
+					}
+				})
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div class="row col-md-offset-2">
+	
+	<div class="col-md-4 form-card">
+		<div>
+			<p><b>Register Now</b>
+			</p>
+		</div>
+		<div class="form-group">
+			<form id="form1" method="post">
+				<input type="text" name="email" placeholder="E-mail" required=""
+				pattern="[-!#$%&'*+\/0-9=?ก-๙A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?ก-๙A-Z^_a-z`{|}~])*@[ก-๙a-zA-Z0-9](-*\.?[ก-๙a-zA-Z0-9])*\.[ก-๙a-zA-Z](-?[ก-๙a-zA-Z0-9])+$" class="form-control"><br />
+				<input type="text" name="username" placeholder="Username" required="" class="form-control"><br />
+				<input type="password" name="password" placeholder="Password" required="" class="form-control"><br />
+				<input type="password" name="passwordConf" placeholder="Confirm Password" required=""
+					class="form-control"><br />
+				<input type="submit" value="Register" class="btn btn-success">
+			</form>
+		</div>
+
+		<div class="mssg bg-danger">
+			<span id="check"></span>
+		</div>
+		<div>
+			<span><b>Already Registered!</b> <a href="/login">Login</a></span>
+		</div>
+		<div id="LangTable"><a href="/login" id="aa"></a>
+		</div>
+	</div>
+
+	<div class="col-md-6 form-card">
+		<img src="docimage.png" height="380px" width="550px">
+	</div>
+	</div>
+
+
+	<script type="text/javascript">
+		window.ymConfig = {"bot":"x1629180641250","host":"https://cloud.yellow.ai"};(function () {var w=window,ic=w.YellowMessenger;if("function"===typeof ic)ic("reattach_activator"),ic("update",ymConfig);else{var d=document,i=function(){i.c(arguments)};function l(){var e=d.createElement("script");e.type="text/javascript",e.async=!0,e.src="https://cdn.yellowmessenger.com/plugin/widget-v2/latest/dist/main.min.js";var t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}i.q=[],i.c=function(e){i.q.push(e)},w.YellowMessenger=i,w.attachEvent?w.attachEvent("onload",l):w.addEventListener("load",l,!1)}})();
+	</script>
+	
+</body>
+
+</html>

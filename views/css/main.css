@@ -1,0 +1,53 @@
+*{
+	overflow-x: hidden;
+}
+body{
+	text-align: center !important;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background: linear-gradient(to right, #FFFCFF, #D5FEFD);
+}
+p{
+	margin-top: 20px;
+	font-size: 30px;
+}
+input{
+	text-align: center;
+}
+#LangTable{
+    margin-bottom: 15px;
+}
+.form-card{
+    background-color: #ffffff;
+    margin-top: 100px;
+	color: black;
+	padding: 10px;
+	padding-left: 50px;
+	padding-right: 50px;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+	
+}
+
+.col-md-6{
+	background-color: rgba(255, 192, 203, 0);
+	box-shadow: none;
+}
+
+.form-group input{
+	background-color: rgba(255, 192, 203, 0);
+	border: none;
+	color: rgb(0, 0, 0);
+	border-bottom: black 1px solid;
+}
+
+.form-group input[type="submit"]{
+	background-color: rgb(4, 124, 34);
+}
+
+
+
+.mssg{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
