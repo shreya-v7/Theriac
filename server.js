@@ -3,6 +3,19 @@ const ejs = require('ejs');
 const path = require('path');
 const app = express();
 
+const { google } = require("googleapis");
+const request = require("request");
+const cors = require("cors");
+const urlParse = require("url-parse");
+const queryParse = require("query-string");
+const axios = require("axios");
+const { response } = require('express');
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 require('dotenv').config();
 
 const bodyParser = require('body-parser');
@@ -11,8 +24,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 const MongoDBURI = process.env.MONGO_URI || 'mongodb+srv://shreya:shreya@cluster0.xazu1vc.mongodb.net/test';
-
-const { auth } = require('express-openid-connect');
 
 mongoose.connect(MongoDBURI, {
   useUnifiedTopology: true,
@@ -57,24 +68,29 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send(err.message);
 });
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: 'oX2cO-1-xW8G4R8DRy6XWw0LpUDkRrgOKdVEocB4TnCb8QleOn9L96kX1AqMyxAC',
-  baseURL: 'http://localhost:3000',
-  clientID: 'IT2YaZZyx6RxXHLJi5JzSzxGpfATF9et',
-  issuerBaseURL: 'https://dev-p1moxcgohxphkmzy.us.auth0.com'
-};
-
-app.get('/test', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
-
-// auth router attaches /login, /logout, and /callback routes to the baseURL
-app.use(auth(config));
-
 // listen on port 3000
 app.listen(process.env.PORT || 3000, () => {
   console.log('Express app listening on port 3000');
 });
+
+
+app.get("/profile/steps", (req, res) => {
+  const oauth2Client = new google.auth.OAuth2(
+    "526239954558-s67oqg3k5r1hea9ngvqe4kp40ngckhot.apps.googleusercontent.com",
+    "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",
+    "http://localhost:3000/profile/steps"
+  )
+  const scopes = ["https://www.googleapis.com/auth/fitness.activity.read profile email openid"]
+  const url = oauth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: scopes,
+    state: JSON.stringify({
+      callbackUrl: req.body.callbackUrl,
+      userID: req.body.userid
+    })
+  })
+  request(url, (err, response, body) => {
+    console.log("error", err);
+    res.send({ url });
+  })
+})
